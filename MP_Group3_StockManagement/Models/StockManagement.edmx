@@ -5,42 +5,32 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="MP_StockManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MP_StockManagement.dbo.Inventory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Inventory">
           <Key>
-            <PropertyRef Name="ProductName" />
-            <PropertyRef Name="SupplierName" />
-            <PropertyRef Name="TotalQuantity" />
+            <PropertyRef Name="InventoryID" />
           </Key>
+          <Property Name="InventoryID" Type="int" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="TotalQuantity" Type="int" Nullable="false" />
-          <Property Name="ReleaseQuantity" Type="int" />
-          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ReleaseQuantity" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ExpirationDate" Type="date" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MP_StockManagement.dbo.Logs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Logs">
           <Key>
-            <PropertyRef Name="Username" />
-            <PropertyRef Name="UserAction" />
-            <PropertyRef Name="Date" />
+            <PropertyRef Name="LogID" />
           </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="UserAction" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MP_StockManagement.dbo.Products' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Products">
           <Key>
-            <PropertyRef Name="ProductName" />
-            <PropertyRef Name="SupplierName" />
-            <PropertyRef Name="ProductPrice" />
-            <PropertyRef Name="SafetyLevel" />
+            <PropertyRef Name="ProductID" />
           </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -93,34 +83,11 @@ warning 6002: The table/view 'MP_StockManagement.dbo.Products' does not have a p
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MP_StockManagementModelStoreContainer">
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Inventory" EntityType="Self.Inventory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Inventory].[ProductName] AS [ProductName], 
-    [Inventory].[SupplierName] AS [SupplierName], 
-    [Inventory].[TotalQuantity] AS [TotalQuantity], 
-    [Inventory].[ReleaseQuantity] AS [ReleaseQuantity], 
-    [Inventory].[TotalPrice] AS [TotalPrice], 
-    [Inventory].[ExpirationDate] AS [ExpirationDate]
-    FROM [dbo].[Inventory] AS [Inventory]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Logs" EntityType="Self.Logs" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Logs].[Username] AS [Username], 
-    [Logs].[UserAction] AS [UserAction], 
-    [Logs].[Date] AS [Date]
-    FROM [dbo].[Logs] AS [Logs]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Products" EntityType="Self.Products" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Products].[ProductName] AS [ProductName], 
-    [Products].[SupplierName] AS [SupplierName], 
-    [Products].[ProductPrice] AS [ProductPrice], 
-    [Products].[SafetyLevel] AS [SafetyLevel], 
-    [Products].[ExpirationDate] AS [ExpirationDate]
-    FROM [dbo].[Products] AS [Products]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__Inventory__1920BF5C" Association="Self.FK__Inventory__1920BF5C">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Inventory" EntitySet="Inventory" />
@@ -135,6 +102,40 @@ warning 6002: The table/view 'MP_StockManagement.dbo.Products' does not have a p
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MP_StockManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="InventoryID" />
+          </Key>
+          <Property Name="InventoryID" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalQuantity" Type="Int32" Nullable="false" />
+          <Property Name="ReleaseQuantity" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__Inventory__1920BF5C" FromRole="Inventory" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserAction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProductPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SafetyLevel" Type="Int32" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__Products__173876EA" FromRole="Products" ToRole="Suppliers" />
+        </EntityType>
         <EntityType Name="Supplier">
           <Key>
             <PropertyRef Name="SupplierName" />
@@ -153,44 +154,6 @@ warning 6002: The table/view 'MP_StockManagement.dbo.Products' does not have a p
           <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Inventory">
-          <Key>
-            <PropertyRef Name="ProductName" />
-            <PropertyRef Name="SupplierName" />
-            <PropertyRef Name="TotalQuantity" />
-          </Key>
-          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TotalQuantity" Type="Int32" Nullable="false" />
-          <Property Name="ReleaseQuantity" Type="Int32" />
-          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK__Inventory__1920BF5C" FromRole="Inventory" ToRole="Suppliers" />
-        </EntityType>
-        <EntityType Name="Log">
-          <Key>
-            <PropertyRef Name="Username" />
-            <PropertyRef Name="UserAction" />
-            <PropertyRef Name="Date" />
-          </Key>
-          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserAction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductName" />
-            <PropertyRef Name="SupplierName" />
-            <PropertyRef Name="ProductPrice" />
-            <PropertyRef Name="SafetyLevel" />
-          </Key>
-          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProductPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="SafetyLevel" Type="Int32" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK__Products__173876EA" FromRole="Products" ToRole="Suppliers" />
         </EntityType>
         <Association Name="FK__Inventory__1920BF5C">
           <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
@@ -221,11 +184,11 @@ warning 6002: The table/view 'MP_StockManagement.dbo.Products' does not have a p
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MP_StockManagementContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
-          <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
           <EntitySet Name="Inventories" EntityType="Self.Inventory" />
           <EntitySet Name="Logs" EntityType="Self.Log" />
           <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
           <AssociationSet Name="FK__Inventory__1920BF5C" Association="Self.FK__Inventory__1920BF5C">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Inventory" EntitySet="Inventories" />
@@ -241,6 +204,41 @@ warning 6002: The table/view 'MP_StockManagement.dbo.Products' does not have a p
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MP_StockManagementModelStoreContainer" CdmEntityContainer="MP_StockManagementContext">
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="MP_StockManagementModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="InventoryID" ColumnName="InventoryID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="ReleaseQuantity" ColumnName="ReleaseQuantity" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="MP_StockManagementModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserAction" ColumnName="UserAction" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="MP_StockManagementModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="SafetyLevel" ColumnName="SafetyLevel" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="MP_StockManagementModel.Supplier">
               <MappingFragment StoreEntitySet="Suppliers">
@@ -256,38 +254,6 @@ warning 6002: The table/view 'MP_StockManagement.dbo.Products' does not have a p
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserRole" ColumnName="UserRole" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Inventories">
-            <EntityTypeMapping TypeName="MP_StockManagementModel.Inventory">
-              <MappingFragment StoreEntitySet="Inventory">
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="ReleaseQuantity" ColumnName="ReleaseQuantity" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Logs">
-            <EntityTypeMapping TypeName="MP_StockManagementModel.Log">
-              <MappingFragment StoreEntitySet="Logs">
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="UserAction" ColumnName="UserAction" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="MP_StockManagementModel.Product">
-              <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
-                <ScalarProperty Name="SafetyLevel" ColumnName="SafetyLevel" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

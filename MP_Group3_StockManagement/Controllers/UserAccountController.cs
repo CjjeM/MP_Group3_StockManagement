@@ -72,6 +72,7 @@ namespace MP_Group3_StockManagement.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Logout()
         {
             Session.Clear();

@@ -14,11 +14,12 @@ namespace MP_Group3_StockManagement.Models
     
     public partial class Inventory
     {
+        public int InventoryID { get; set; }
         public string ProductName { get; set; }
         public string SupplierName { get; set; }
         public int TotalQuantity { get; set; }
-        public Nullable<int> ReleaseQuantity { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
+        public int ReleaseQuantity { get; set; }
+        public decimal TotalPrice { get; set; }
         public Nullable<System.DateTime> ExpirationDate { get; set; }
     
         public virtual Supplier Supplier { get; set; }

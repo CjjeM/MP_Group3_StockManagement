@@ -25,10 +25,10 @@ namespace MP_Group3_StockManagement.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<Inventory> Inventories { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<UserAccount> UserAccounts { get; set; }
     }
 }

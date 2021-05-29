@@ -14,6 +14,7 @@ namespace MP_Group3_StockManagement.Models
     
     public partial class Log
     {
+        public int LogID { get; set; }
         public string Username { get; set; }
         public string UserAction { get; set; }
         public System.DateTime Date { get; set; }

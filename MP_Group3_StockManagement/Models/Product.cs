@@ -14,6 +14,7 @@ namespace MP_Group3_StockManagement.Models
     
     public partial class Product
     {
+        public int ProductID { get; set; }
         public string ProductName { get; set; }
         public string SupplierName { get; set; }
         public decimal ProductPrice { get; set; }
