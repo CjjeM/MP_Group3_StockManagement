@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MP_Group3_StockManagement.Models.Log>
+
+@{
+    ViewBag.Title = "ViewUserLogs";
+}
+
+<h2>ViewUserLogs</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserAction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserAction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LogID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LogID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LogID })
+        </td>
+    </tr>
+}
+
+</table>
