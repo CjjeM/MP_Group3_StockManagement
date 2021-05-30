@@ -14,16 +14,14 @@ namespace MP_Group3_StockManagement.Controllers
         // GET: Supplier
         public ActionResult Index(string search)
         {
-            var suppliers = from s in db.Suppliers
-                            select s;
-
             if (!String.IsNullOrEmpty(search))
             {
+                var suppliers = from s in db.Suppliers select s;
                 suppliers = suppliers.Where(s => s.SupplierName.Contains(search));
                 return View(suppliers.ToList());
             }
 
-            return View(suppliers.ToList());
+            return View(db.Suppliers.ToList());
         }
 
         public ActionResult AddSupplier()

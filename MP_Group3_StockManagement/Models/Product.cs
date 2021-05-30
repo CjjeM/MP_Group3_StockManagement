@@ -11,7 +11,9 @@ namespace MP_Group3_StockManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,14 +23,32 @@ namespace MP_Group3_StockManagement.Models
         }
     
         public int ProductID { get; set; }
+
+        [Display(Name = "Product name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Product Name required")]
         public string ProductName { get; set; }
+
+        [Display(Name = "Supplier name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Supplier Name required")]
         public string SupplierName { get; set; }
+
+        [Display(Name = "Product price")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Product Price required")]
         public decimal ProductPrice { get; set; }
+
+        [Display(Name = "Safety Level")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Safety Level required")]
         public int SafetyLevel { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
+
+
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inventory> Inventories { get; set; }
         public virtual Supplier Supplier { get; set; }
+
+        public string SupplierNameSelectedValue { get; set; }
+        public IEnumerable<SelectListItem> SupplierDropdownList { get; set; }
     }
 }

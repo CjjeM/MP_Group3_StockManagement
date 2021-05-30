@@ -35,7 +35,7 @@
           <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SafetyLevel" Type="int" Nullable="false" />
-          <Property Name="ExpirationDate" Type="date" Nullable="false" />
+          <Property Name="ExpirationDate" Type="date" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
@@ -147,7 +147,7 @@
           <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProductPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SafetyLevel" Type="Int32" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__Produ__47DBAE45" FromRole="Products" ToRole="Inventory" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK__Products__Suppli__44FF419A" FromRole="Products" ToRole="Suppliers" />
         </EntityType>
