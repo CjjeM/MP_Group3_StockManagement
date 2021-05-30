@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace MP_Group3_StockManagement.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public ActionResult Index()

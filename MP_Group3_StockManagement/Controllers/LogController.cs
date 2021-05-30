@@ -40,7 +40,7 @@ namespace MP_Group3_StockManagement.Controllers
             return View(db.Logs.ToList());
         }
 
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "User")]
         public ActionResult ViewUserLogs()
         {
             string currentUser = Session["Username"].ToString();

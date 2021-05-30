@@ -20,8 +20,9 @@ namespace MP_Group3_StockManagement.Models
         public int TotalQuantity { get; set; }
         public int ReleaseQuantity { get; set; }
         public decimal TotalPrice { get; set; }
-        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public System.DateTime ExpirationDate { get; set; }
     
+        public virtual Product Product { get; set; }
         public virtual Supplier Supplier { get; set; }
     }
 }

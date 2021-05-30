@@ -14,13 +14,21 @@ namespace MP_Group3_StockManagement.Models
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.Inventories = new HashSet<Inventory>();
+        }
+    
         public int ProductID { get; set; }
         public string ProductName { get; set; }
         public string SupplierName { get; set; }
         public decimal ProductPrice { get; set; }
         public int SafetyLevel { get; set; }
-        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public System.DateTime ExpirationDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Inventory> Inventories { get; set; }
         public virtual Supplier Supplier { get; set; }
     }
 }

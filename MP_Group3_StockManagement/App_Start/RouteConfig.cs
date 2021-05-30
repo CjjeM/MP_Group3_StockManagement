@@ -16,7 +16,7 @@ namespace MP_Group3_StockManagement
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { action = "Index", id = UrlParameter.Optional }
             );
         }
     }

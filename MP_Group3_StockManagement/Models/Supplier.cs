@@ -11,7 +11,8 @@ namespace MP_Group3_StockManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Supplier
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,8 +22,19 @@ namespace MP_Group3_StockManagement.Models
             this.Products = new HashSet<Product>();
         }
     
+        public int SupplierID { get; set; }
+
+        [Display(Name = "Supplier name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Supplier Name required")]
         public string SupplierName { get; set; }
-        public string ProductName { get; set; }
+
+        [Display(Name = "Supplier Address")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Supplier Address required")]
+        public string SupplierAddress { get; set; }
+
+        [Display(Name = "Supplier Contact")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Supplier Contact required")]
+        public string SupplierContact { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inventory> Inventories { get; set; }

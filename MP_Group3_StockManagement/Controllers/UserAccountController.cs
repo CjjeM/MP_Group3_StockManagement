@@ -18,12 +18,14 @@ namespace MP_Group3_StockManagement.Controllers
             return View(db.UserAccounts.ToList());
         }
 
+        [AllowAnonymous]
         public ActionResult Signup()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Signup(UserAccount model)
         {
@@ -41,12 +43,14 @@ namespace MP_Group3_StockManagement.Controllers
            
         }
 
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserAccount model, string returnUrl)
         {

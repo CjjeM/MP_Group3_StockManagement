@@ -9,13 +9,13 @@
           <Key>
             <PropertyRef Name="InventoryID" />
           </Key>
-          <Property Name="InventoryID" Type="int" Nullable="false" />
+          <Property Name="InventoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="TotalQuantity" Type="int" Nullable="false" />
           <Property Name="ReleaseQuantity" Type="int" Nullable="false" />
           <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ExpirationDate" Type="date" />
+          <Property Name="ExpirationDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Logs">
           <Key>
@@ -28,22 +28,23 @@
         </EntityType>
         <EntityType Name="Products">
           <Key>
-            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ProductName" />
           </Key>
           <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProductPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SafetyLevel" Type="int" Nullable="false" />
-          <Property Name="ExpirationDate" Type="date" />
+          <Property Name="ExpirationDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
             <PropertyRef Name="SupplierName" />
-            <PropertyRef Name="ProductName" />
           </Key>
+          <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SupplierAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SupplierContact" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="UserAccounts">
           <Key>
@@ -54,31 +55,39 @@
           <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="UserRole" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Inventory__1920BF5C">
+        <Association Name="FK__Inventory__Produ__47DBAE45">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductName" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="ProductName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__Suppl__48CFD27E">
           <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Principal>
             <Dependent Role="Inventory">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__173876EA">
+        <Association Name="FK__Products__Suppli__44FF419A">
           <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Principal>
             <Dependent Role="Products">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -88,11 +97,15 @@
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccounts" EntityType="Self.UserAccounts" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Inventory__1920BF5C" Association="Self.FK__Inventory__1920BF5C">
+          <AssociationSet Name="FK__Inventory__Produ__47DBAE45" Association="Self.FK__Inventory__Produ__47DBAE45">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__Suppl__48CFD27E" Association="Self.FK__Inventory__Suppl__48CFD27E">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Inventory" EntitySet="Inventory" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__173876EA" Association="Self.FK__Products__173876EA">
+          <AssociationSet Name="FK__Products__Suppli__44FF419A" Association="Self.FK__Products__Suppli__44FF419A">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -106,14 +119,15 @@
           <Key>
             <PropertyRef Name="InventoryID" />
           </Key>
-          <Property Name="InventoryID" Type="Int32" Nullable="false" />
+          <Property Name="InventoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TotalQuantity" Type="Int32" Nullable="false" />
           <Property Name="ReleaseQuantity" Type="Int32" Nullable="false" />
           <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK__Inventory__1920BF5C" FromRole="Inventory" ToRole="Suppliers" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Inventory__Produ__47DBAE45" FromRole="Inventory" ToRole="Products" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__Inventory__Suppl__48CFD27E" FromRole="Inventory" ToRole="Suppliers" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -126,25 +140,27 @@
         </EntityType>
         <EntityType Name="Product">
           <Key>
-            <PropertyRef Name="ProductID" />
+            <PropertyRef Name="ProductName" />
           </Key>
           <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProductPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="SafetyLevel" Type="Int32" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK__Products__173876EA" FromRole="Products" ToRole="Suppliers" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__Produ__47DBAE45" FromRole="Products" ToRole="Inventory" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__Products__Suppli__44FF419A" FromRole="Products" ToRole="Suppliers" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
             <PropertyRef Name="SupplierName" />
-            <PropertyRef Name="ProductName" />
           </Key>
+          <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__1920BF5C" FromRole="Suppliers" ToRole="Inventory" />
-          <NavigationProperty Name="Products" Relationship="Self.FK__Products__173876EA" FromRole="Suppliers" ToRole="Products" />
+          <Property Name="SupplierAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierContact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__Suppl__48CFD27E" FromRole="Suppliers" ToRole="Inventory" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Products__Suppli__44FF419A" FromRole="Suppliers" ToRole="Products" />
         </EntityType>
         <EntityType Name="UserAccount">
           <Key>
@@ -155,31 +171,39 @@
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserRole" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Inventory__1920BF5C">
+        <Association Name="FK__Inventory__Produ__47DBAE45">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductName" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="ProductName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__Suppl__48CFD27E">
           <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Principal>
             <Dependent Role="Inventory">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Products__173876EA">
+        <Association Name="FK__Products__Suppli__44FF419A">
           <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
           <End Role="Products" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Principal>
             <Dependent Role="Products">
               <PropertyRef Name="SupplierName" />
-              <PropertyRef Name="ProductName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -189,11 +213,15 @@
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
           <EntitySet Name="UserAccounts" EntityType="Self.UserAccount" />
-          <AssociationSet Name="FK__Inventory__1920BF5C" Association="Self.FK__Inventory__1920BF5C">
+          <AssociationSet Name="FK__Inventory__Produ__47DBAE45" Association="Self.FK__Inventory__Produ__47DBAE45">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__Suppl__48CFD27E" Association="Self.FK__Inventory__Suppl__48CFD27E">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Inventory" EntitySet="Inventories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Products__173876EA" Association="Self.FK__Products__173876EA">
+          <AssociationSet Name="FK__Products__Suppli__44FF419A" Association="Self.FK__Products__Suppli__44FF419A">
             <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
@@ -242,8 +270,10 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="MP_StockManagementModel.Supplier">
               <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
+                <ScalarProperty Name="SupplierContact" ColumnName="SupplierContact" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,42 @@
+﻿@model MP_Group3_StockManagement.Models.Supplier
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Supplier</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierContact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierContact)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit Supplier", "EditSupplier", new { id = Model.SupplierID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
