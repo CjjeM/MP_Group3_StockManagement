@@ -11,18 +11,41 @@ namespace MP_Group3_StockManagement.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
+
     public partial class Inventory
     {
         public int InventoryID { get; set; }
+
+        [Display(Name = "Product name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Product Name required")]
         public string ProductName { get; set; }
+
+        [Display(Name = "Supplier name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Supplier Name required")]
         public string SupplierName { get; set; }
+
+        [Display(Name = "Total Quantity")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Total Quantity required")]
         public int TotalQuantity { get; set; }
+
+        [Display(Name = "Release Quantity")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Release Quantity required")]
         public int ReleaseQuantity { get; set; }
+
+        [Display(Name = "Total Price")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Total Price required")]
         public decimal TotalPrice { get; set; }
+
+        [DataType(DataType.Date)]
         public System.DateTime ExpirationDate { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual Supplier Supplier { get; set; }
+
+        public List<SelectListItem> SupplierList { get; set; }
+        public List<SelectListItem> ProductList { get; set; }
+
     }
 }

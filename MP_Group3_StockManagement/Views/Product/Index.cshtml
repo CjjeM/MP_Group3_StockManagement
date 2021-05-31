@@ -9,6 +9,17 @@
 <p>
     @Html.ActionLink("Add New Product", "AddProduct", null, new { @class = "btn btn-success" })
 </p>
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <div class="input-group">
+        @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Product" })
+        <div class="input-group-append">
+            <input type="submit" value="Search" class="btn btn-secondary" />
+        </div>
+    </div>
+}
+
 <table class="table">
     <tr>
         <th>
