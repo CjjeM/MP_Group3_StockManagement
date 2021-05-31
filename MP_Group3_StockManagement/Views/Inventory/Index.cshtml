@@ -36,7 +36,9 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    using (Html.BeginForm("DeleteInventory", "Inventory", new { id = item.InventoryID }))
+    {
+        <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Product.ProductName)
         </td>
@@ -62,11 +64,13 @@
         </td>
 
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.InventoryID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.InventoryID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.InventoryID })
+            @Html.ActionLink("Edit", "EditInventory", new { id = item.InventoryID }, new { @class = "btn btn-secondary" }) |
+            @Html.ActionLink("Details", "Details", new { id = item.InventoryID }, new { @class = "btn btn-info" }) |
+            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the inventory: @item.ProductName?')" />
         </td>
     </tr>
+    }
+    
 }
 
 </table>

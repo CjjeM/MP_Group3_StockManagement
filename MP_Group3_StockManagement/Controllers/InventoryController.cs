@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -27,70 +28,48 @@ namespace MP_Group3_StockManagement.Controllers
 
         public ActionResult AddInventory()
         {
-            CascadingModel cascadingModel = new CascadingModel();
-            foreach (var supplier in db.Suppliers)
-            {
-                cascadingModel.Suppliers.Add(new SelectListItem
-                {
-                    Text = supplier.SupplierName,
-                    Value = supplier.SupplierName
-                });
-            }
+            var getSupplierName = db.Suppliers.ToList();
+            SelectList list = new SelectList(getSupplierName, "SupplierName", "SupplierName");
+            ViewBag.listSupplier = list;
 
-            return View(cascadingModel);
+            return View();
         }
 
         [HttpPost]
-        public ActionResult Dropdowns(string? supplierName, string? productName)
+        public JsonResult GetProducts(string id)
         {
-            CascadingModel cascadingModel = new CascadingModel();
+            var getProductName = db.Products.Where(p => p.SupplierName == id).ToList();
+            SelectList list = new SelectList(getProductName, "ProductName", "ProductName");
 
-            foreach(var supplier in db.Suppliers)
-            {
-                cascadingModel.Suppliers.Add(new SelectListItem
-                {
-                    Text = supplier.SupplierName,
-                    Value = supplier.SupplierName
-                });
-            }
-
-            if (supplierName != null)
-            {
-                var products = (from product in db.Products
-                                where product.SupplierName == supplierName
-                                select product).ToList();
-
-                foreach(var product in products)
-                {
-                    cascadingModel.Products.Add(new SelectListItem
-                    {
-                        Text = product.ProductName,
-                        Value = product.ProductName
-                    });
-                }
-            }
-
-            return View(cascadingModel);
+            return Json(list);
         }
-
 
         [Authorize(Roles = "Admin, user")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddInventory(Inventory model)
         {
-            var log = new Log()
+            try
             {
-                Username = Session["Username"].ToString(),
-                UserAction = "Added Inventory: " + model.ProductName,
-                Date = DateTime.Now
-            };
+                var log = new Log()
+                {
+                    Username = Session["Username"].ToString(),
+                    UserAction = "Added Inventory: " + model.ProductName,
+                    Date = DateTime.Now
+                };
 
-            db.Inventories.Add(model);
-            db.Logs.Add(log);
+                db.Inventories.Add(model);
+                db.Logs.Add(log);
 
-            db.SaveChanges();
-            return RedirectToAction("Index", "Product");
+                db.SaveChanges();
+                return RedirectToAction("Index", "Inventory");
+            }
+
+            catch (DbEntityValidationException ex)
+            {
+                string errorMessages = string.Join("; ", ex.EntityValidationErrors.SelectMany(x => x.ValidationErrors).Select(x => x.PropertyName + ": " + x.ErrorMessage));
+                throw new DbEntityValidationException(errorMessages);
+            }
         }
 
         [Authorize(Roles = "Admin, user")]
@@ -112,7 +91,7 @@ namespace MP_Group3_StockManagement.Controllers
 
         [Authorize(Roles = "Admin, user")]
         [HttpPost]
-        public ActionResult EditProduct(int id, Inventory model)
+        public ActionResult EditInventory(int id, Inventory model)
         {
             try
             {
@@ -127,7 +106,7 @@ namespace MP_Group3_StockManagement.Controllers
                 db.Entry(model).State = EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Inventory");
             }
             catch
             {
@@ -159,7 +138,7 @@ namespace MP_Group3_StockManagement.Controllers
             db.Entry(inventory).State = EntityState.Deleted;
             db.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Inventory");
         }
     }
 }

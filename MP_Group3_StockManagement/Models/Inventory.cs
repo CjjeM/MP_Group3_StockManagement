@@ -39,13 +39,10 @@ namespace MP_Group3_StockManagement.Models
         public decimal TotalPrice { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime ExpirationDate { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual Supplier Supplier { get; set; }
-
-        public List<SelectListItem> SupplierList { get; set; }
-        public List<SelectListItem> ProductList { get; set; }
-
     }
 }
