@@ -1,17 +1,28 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<div class="container py-5">
+    <div class="row h-80 align-items-center py-5">
+        <div class="col-lg-6">
+            <h1 class="display-4"><strong>Hello, how can we help? </strong></h1>
+            <p class="text-lg-left" style="text-align: justify">Do you need support, have any questions or inquiries regarding our products and services? Feel free to let us know and we will respond to you inquiry in 24 hours or less.</p>
+            <p class="text-lg-left" style="text-align: justify">
+                <asp:Button ID="btn_infoForm" runat="server" CausesValidation="False" CssClass="btn-info rounded-0" Text="Inquiry Form" UseSubmitBehavior="False" Width="130px" Height="38px" PostBackUrl="~/Contact_Us_InquiryForm.aspx" />
+            </p>
+        </div>
+    </div>
+    <address>
+        1st Floor, LKG Tower Condominium Corporation,<br />
+        6000, Ayala Avenue, Makati, <br />
+        1111 Metro Manila <br />
+        <abbr title="Phone">Phone:</abbr>
+        (02) 8967 5432
+    </address>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+    <address>
+        <strong>Support:</strong>   <a href="#">pepsikoSupport@gmail.com</a><br />
+        <strong>Marketing:</strong> <a href="#">pepsikoMarketing@gmail.com</a>
+    </address>
+</div>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+
