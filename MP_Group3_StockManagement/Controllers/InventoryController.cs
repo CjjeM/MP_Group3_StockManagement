@@ -15,7 +15,9 @@ namespace MP_Group3_StockManagement.Controllers
         // GET: Inventory
         public ActionResult Index(string search)
         {
-            var inventories = from i in db.Inventories select i;
+            var inventories = from i in db.Inventories
+                              where DateTime.Compare(DateTime.Now, (DateTime)i.ExpirationDate) < 1
+                              select i;
 
             if (string.IsNullOrEmpty(search))
             {

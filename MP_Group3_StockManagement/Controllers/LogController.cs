@@ -46,5 +46,12 @@ namespace MP_Group3_StockManagement.Controllers
             string currentUser = Session["Username"].ToString();
             return View(db.Logs.Where(u => u.Username == currentUser).ToList());
         }
+
+
+        public ActionResult Details(int id)
+        {
+            Log log = db.Logs.Single(s => s.LogID == id);
+            return View(log);
+        }
     }
 }
