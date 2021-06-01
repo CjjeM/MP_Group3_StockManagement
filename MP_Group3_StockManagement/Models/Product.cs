@@ -40,6 +40,7 @@ namespace MP_Group3_StockManagement.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Safety Level required")]
         public int SafetyLevel { get; set; }
 
+        [Display(Name = "Expiration Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ExpirationDate { get; set; }
