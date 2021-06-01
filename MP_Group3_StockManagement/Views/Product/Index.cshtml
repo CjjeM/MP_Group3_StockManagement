@@ -1,80 +1,81 @@
 ﻿@model IEnumerable<MP_Group3_StockManagement.Models.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Product List";
 }
 
-<h2>Index</h2>
+<h2>Product List</h2>
 
 <p>
     @Html.ActionLink("Add New Product", "AddProduct", null, new { @class = "btn btn-success" })
 </p>
 
-@using (Html.BeginForm("Index", "Product", FormMethod.Get))
-{
-    <div class="input-group">
-        @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Product" })
-        <div class="input-group-append">
-            <input type="submit" value="Search" class="btn btn-secondary" />
-        </div>
-    </div>
-}
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Supplier.SupplierName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SafetyLevel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ExpirationDate)
-        </th>
 
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        using (Html.BeginForm("DeleteProduct", "Product", new { id = item.ProductID }))
+<div class="form-row">
+    <div class="col">
+
+        @using (Html.BeginForm("Index", "Product", FormMethod.Get))
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SafetyLevel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpirationDate)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductID }, new { @class = "btn btn-secondary" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ProductID }, new { @class = "btn btn-info" }) |
-                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the product: @item.ProductName?')" />
-                </td>
-            </tr>
+            <div class="form-row">
+                <div class="input-group">
+                    @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Product" })
+                    <div class="input-group-append">
+                        <input type="submit" value="Search" class="btn btn-secondary" />
+                    </div>
+                </div>
+            </div>
         }
 
-    }
+    </div>
 
-</table>
+    <div class="col">
+
+        <div class="form-group ml-5">
+            <div class="btn-group">
+                <button id="InCirc" class="btn btn-outline-info">In Circulation</button>
+                <button id="NotInCirc" class="btn btn-outline-info">Not in Circulation</button>
+                <button id="All" class="btn btn-outline-info">All Products</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<br />
+<div id="filterProduct">
+    @Html.Partial("_Filter")
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+}
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var url = '@Url.Action("FilterProducts", "Product")';
+
+    $(function () {
+        $('#InCirc').click(function () {
+            var keyWord = "in";
+            $('#filterProduct').load(url, { filter: keyWord });
+        })
+
+        $('#NotInCirc').click(function () {
+            var keyWord = "notCirc";
+            $('#filterProduct').load(url, { filter: keyWord });
+        })
+
+        $('#All').click(function () {
+            var keyWord = "all";
+            $('#filterProduct').load(url, { filter: keyWord });
+        })
+    });
+</script>

@@ -12,6 +12,7 @@ namespace MP_Group3_StockManagement.Controllers
     {
         MP_StockManagementContext db = new MP_StockManagementContext();
         // GET: Product
+        [HttpGet]
         public ActionResult Index(string search)
         {
             var products = from s in db.Products select s;
@@ -123,6 +124,30 @@ namespace MP_Group3_StockManagement.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult FilterProducts(string filter)
+        {
+            switch (filter)
+            {
+                case "in":
+                    var inCirc = from p in db.Products
+                                 where p.ExpirationDate == null ||
+                                 DateTime.Compare(DateTime.Now, (DateTime)p.ExpirationDate) < 1
+                                 select p;
+                    return PartialView("_Filter", inCirc.ToList());
+                case "notCirc":
+                    var notInCirc = from p in db.Products
+                                    where p.ExpirationDate != null &&
+                                    DateTime.Compare(DateTime.Now, (DateTime)p.ExpirationDate) > 0
+                                    select p;
+
+                    return PartialView("_Filter", notInCirc.ToList());
+                case "all":
+                    return PartialView("_Filter", db.Products.ToList());
+            }
+
+            return PartialView("_Filter", db.Products.ToList());
         }
     }
 }

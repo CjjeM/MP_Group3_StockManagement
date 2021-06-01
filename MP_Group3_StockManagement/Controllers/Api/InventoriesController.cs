@@ -18,9 +18,9 @@ namespace MP_Group3_StockManagement.Controllers.Api
 
         // GET: api/Inventories
         [Route("api/inventory")]
-        public IQueryable<GetInventory> GetInventories()
+        public IEnumerable<GetInventory> GetInventories()
         {
-            return db.Inventories.ToList()
+            return db.Inventories
                     .Select(i => new GetInventory { 
                         InventoryID = i.InventoryID,
                         ProductName = i.ProductName,
@@ -28,7 +28,7 @@ namespace MP_Group3_StockManagement.Controllers.Api
                         ReleaseQuantity = i.ReleaseQuantity,
                         TotalPrice = i.TotalPrice,
                         ExpirationDate = i.ExpirationDate
-                    }).AsQueryable();
+                    }).ToList();
         }
 
         public class GetInventory
