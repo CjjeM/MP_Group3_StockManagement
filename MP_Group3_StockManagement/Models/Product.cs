@@ -40,16 +40,13 @@ namespace MP_Group3_StockManagement.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Safety Level required")]
         public int SafetyLevel { get; set; }
 
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ExpirationDate { get; set; }
-    
+        public int RadioButtonVal { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inventory> Inventories { get; set; }
         public virtual Supplier Supplier { get; set; }
-
-        public string SupplierNameSelectedValue { get; set; }
-        public IEnumerable<SelectListItem> SupplierDropdownList { get; set; }
     }
 }

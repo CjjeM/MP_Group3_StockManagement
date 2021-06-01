@@ -7,7 +7,7 @@
 <h2>Supplier List</h2>
 
 <p>
-    @Html.ActionLink("Add Supplier", "AddSupplier")
+    @Html.ActionLink("Add New Supplier", "AddSupplier", null, new { @class = "btn btn-success" })
 </p>
 
 @using (Html.BeginForm("Index", "Supplier", FormMethod.Get))

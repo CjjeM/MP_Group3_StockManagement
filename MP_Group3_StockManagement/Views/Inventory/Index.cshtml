@@ -1,14 +1,27 @@
 ﻿@model IEnumerable<MP_Group3_StockManagement.Models.Inventory>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Inventory List";
 }
 
-<h2>Index</h2>
+<h2>Inventory List</h2>
 
 <p>
-    @Html.ActionLink("Add Inventory", "AddInventory")
+    @Html.ActionLink("Add New Inventory", "AddInventory", null, new { @class = "btn btn-success" })
 </p>
+
+@using (Html.BeginForm("Index", "Inventory", FormMethod.Get))
+{
+    <div class="input-group">
+        @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Supplier" })
+        <div class="input-group-append">
+            <input type="submit" value="Search" class="btn btn-secondary" />
+        </div>
+    </div>
+
+
+}
+
 <table class="table">
     <tr>
         <th>
@@ -35,42 +48,45 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    using (Html.BeginForm("DeleteInventory", "Inventory", new { id = item.InventoryID }))
+    @foreach (var item in Model)
     {
-        <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Product.ProductName)
-        </td>
+        using (Html.BeginForm("DeleteInventory", "Inventory", new { id = item.InventoryID }))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductName)
+                </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
-        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
+                </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalQuantity)
-        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalQuantity)
+                </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.ReleaseQuantity)
-        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseQuantity)
+                </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalPrice)
-        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.ExpirationDate)
-        </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpirationDate)
+                </td>
 
-        <td>
-            @Html.ActionLink("Edit", "EditInventory", new { id = item.InventoryID }, new { @class = "btn btn-secondary" }) |
-            @Html.ActionLink("Details", "Details", new { id = item.InventoryID }, new { @class = "btn btn-info" }) |
-            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the inventory: @item.ProductName?')" />
-        </td>
-    </tr>
+                <td>
+                    @Html.ActionLink("Edit", "EditInventory", new { id = item.InventoryID }, new { @class = "btn btn-secondary" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.InventoryID }, new { @class = "btn btn-info" }) |
+                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the inventory: @item.ProductName?')" />
+                </td>
+            </tr>
+        }
+
     }
-    
-}
 
 </table>
+
+

@@ -3,7 +3,7 @@
     "mssql1": {
       "type": "mssql.onprem",
       "connectionId": "MP_StockManagementContext",
-      "secretStore": "AzureAppSettings"
+      "secretStore": null
     }
   }
 }

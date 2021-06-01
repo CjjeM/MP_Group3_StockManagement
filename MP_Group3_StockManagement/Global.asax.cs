@@ -21,5 +21,13 @@ namespace MP_Group3_StockManagement
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
             GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
+
+        public void Application_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+            MvcApplication mvcApplication = sender as MvcApplication;
+            HttpRequest request = null;
+            if (mvcApplication != null) request = mvcApplication.Request;
+        }
     }
 }
