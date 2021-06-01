@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SafetyLevel, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Safety Level", new List<SelectListItem> {
+                @Html.DropDownListFor(model => model.SafetyLevel, new List<SelectListItem> {
                         new SelectListItem { Text = "1", Value = "1", Selected = true},
                         new SelectListItem { Text = "2", Value = "2"},
                         new SelectListItem { Text = "3", Value = "3"}

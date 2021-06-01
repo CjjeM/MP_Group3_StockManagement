@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
@@ -124,6 +125,7 @@ namespace MP_Group3_StockManagement.Controllers
 
         [Authorize(Roles = "Admin, user")]
         [HttpPost]
+        [HandleError(ExceptionType = typeof(DbUpdateException), View = "Error")]
         public ActionResult DeleteInventory(int id)
         {
             var inventory = db.Inventories.FirstOrDefault(p => p.InventoryID == id);

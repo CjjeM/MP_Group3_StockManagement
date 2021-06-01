@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -108,6 +109,7 @@ namespace MP_Group3_StockManagement.Controllers
 
         [Authorize(Roles = "Admin, user")]
         [HttpPost]
+        [HandleError(ExceptionType = typeof(DbUpdateException), View = "Error")]
         public ActionResult DeleteProduct(int id)
         {
             var product = db.Products.FirstOrDefault(p => p.ProductID == id);

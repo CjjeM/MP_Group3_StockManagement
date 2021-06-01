@@ -49,10 +49,10 @@ namespace MP_Group3_StockManagement.Controllers
 
         public ActionResult GetCostCurrentAvailableStocks()
         {
-            var model = from p in db.Products
+            var model = from p in db.Inventories
                         where p.ExpirationDate == null ||
-                        DateTime.Compare(DateTime.Now, (DateTime)p.ExpirationDate) < 1
-                        select p.ProductPrice;
+                        DateTime.Compare(DateTime.Now, p.ExpirationDate) < 1
+                        select p.TotalPrice;
 
             ViewBag.CurrentStocksCost = Queryable.Sum(model);
 
@@ -60,10 +60,10 @@ namespace MP_Group3_StockManagement.Controllers
         }
         public ActionResult GetCostExpiredStocks()
         {
-            var model = from p in db.Products
+            var model = from p in db.Inventories
                         where p.ExpirationDate != null &&
-                        DateTime.Compare(DateTime.Now, (DateTime)p.ExpirationDate) > 0
-                        select p.ProductPrice;
+                        DateTime.Compare(DateTime.Now, p.ExpirationDate) > 0
+                        select p.TotalPrice;
 
             ViewBag.CurrentExpiredCost = Queryable.Sum(model);
 
