@@ -1,0 +1,18 @@
+﻿@model IEnumerable<MP_Group3_StockManagement.Models.Product>
+
+<div class="card" style="width: 100%;max-height:700px;">
+    <div class="card-header">
+        <h5 class="card-title">
+            Expired Products
+        </h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </li>
+        }
+    </ul>
+</div>
+

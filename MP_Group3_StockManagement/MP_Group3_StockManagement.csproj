@@ -151,6 +151,7 @@
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserAccountController.cs" />
     <Compile Include="Global.asax.cs">
@@ -364,6 +365,14 @@
     <Content Include="Views\Inventory\EditInventory.cshtml" />
     <Content Include="Views\Inventory\Details.cshtml" />
     <Content Include="Views\Log\Details.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\BelowCritical.cshtml" />
+    <Content Include="Views\Report\WithinCritical.cshtml" />
+    <Content Include="Views\Report\AboveCritical.cshtml" />
+    <Content Include="Views\Report\ExpiredProductsList.cshtml" />
+    <Content Include="Views\Report\CostCurrentAvailableStocks.cshtml" />
+    <Content Include="Views\Report\CostExpiredStocks.cshtml" />
+    <Content Include="Views\Product\_Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

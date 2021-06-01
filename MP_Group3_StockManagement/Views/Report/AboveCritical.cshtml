@@ -1,0 +1,17 @@
+﻿@model IEnumerable<MP_Group3_StockManagement.Models.Product>
+
+<div class="card border-danger" style="width: 18rem;max-height:400px;">
+    <div class="card-header bg-danger">
+        <h5 class="card-title">
+            Above Critical Products
+        </h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model)
+        {
+            <li class="list-group-item">
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </li>
+        }
+    </ul>
+</div>

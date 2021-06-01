@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MP_Group3_StockManagement.Models.Product>
+
+@{
+    ViewBag.Title = "Report Summary";
+}
+
+<h2>Report</h2>
+<br />
+<hr />
+
+
+<div class="row">
+    <div class="col">
+        @{ Html.RenderAction("GetBelowCritical", "Report");}
+    </div>
+
+    <div class="col">
+        @{Html.RenderAction("GetWithinCritical", "Report");}
+    </div>
+
+    <div class="col">
+        @{ Html.RenderAction("GetAboveCritical", "Report");}
+    </div>
+</div>
+
+<hr />
+
+@{ Html.RenderAction("GetExpiredProductsList", "Report");}
+
+<hr />
+
+<div class="row">
+    <div class="col">
+        @{ Html.RenderAction("GetCostCurrentAvailableStocks", "Report");}
+    </div>
+
+    <div class="col">
+        @{ Html.RenderAction("GetCostExpiredStocks", "Report");}
+    </div>
+</div>
