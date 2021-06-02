@@ -37,14 +37,22 @@ namespace MP_Group3_StockManagement.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ViewAdminLogs()
         {
-            return View(db.Logs.ToList());
+            var logs = from log in db.Logs
+                       orderby log.Date descending
+                       select log;
+
+            return View(logs.ToList());
         }
 
         [Authorize(Roles = "User")]
         public ActionResult ViewUserLogs()
         {
-            string currentUser = Session["Username"].ToString();
-            return View(db.Logs.Where(u => u.Username == currentUser).ToList());
+            var logs = from log in db.Logs
+                       where log.Username == Session["Username"].ToString()
+                       orderby log.Date descending
+                       select log;
+
+            return View(logs.ToList());
         }
 
 

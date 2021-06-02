@@ -16,17 +16,13 @@ namespace MP_Group3_StockManagement.Controllers
         // GET: Inventory
         public ActionResult Index(string search)
         {
-            var inventories = from i in db.Inventories
-                              where DateTime.Compare(DateTime.Now, (DateTime)i.ExpirationDate) < 1
-                              select i;
 
             if (string.IsNullOrEmpty(search))
             {
-                return View(inventories.ToList());
+                return View(db.Inventories.OrderBy(i => i.ExpirationDate).ToList());
             }
 
-            inventories = inventories.Where(p => p.SupplierName.Contains(search));
-            return View(inventories.ToList());
+            return View(db.Inventories.OrderBy(i => i.ExpirationDate).Where(i => i.SupplierName.Contains(search)).ToList());
         }
 
         public ActionResult AddInventory()

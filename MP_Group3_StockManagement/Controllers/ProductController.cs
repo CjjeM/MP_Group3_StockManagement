@@ -16,15 +16,15 @@ namespace MP_Group3_StockManagement.Controllers
         [HttpGet]
         public ActionResult Index(string search)
         {
-            var products = from s in db.Products select s;
+            var products = from p in db.Products select p;
 
             if (string.IsNullOrEmpty(search))
             {
-                return View(products.ToList());
+                return View(products.OrderBy(p => p.ExpirationDate).ToList());
             }
 
             products = products.Where(p => p.ProductName.Contains(search));
-            return View(products.ToList());
+            return View(products.OrderBy(p => p.ExpirationDate).ToList());
         }
 
         public ActionResult AddProduct()
