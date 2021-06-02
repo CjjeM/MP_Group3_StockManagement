@@ -136,20 +136,22 @@ namespace MP_Group3_StockManagement.Controllers
                     var inCirc = from p in db.Products
                                  where p.ExpirationDate == null ||
                                  DateTime.Compare(DateTime.Now, (DateTime)p.ExpirationDate) < 1
+                                 orderby p.ExpirationDate ascending
                                  select p;
                     return PartialView("_Filter", inCirc.ToList());
                 case "notCirc":
                     var notInCirc = from p in db.Products
                                     where p.ExpirationDate != null &&
                                     DateTime.Compare(DateTime.Now, (DateTime)p.ExpirationDate) > 0
+                                    orderby p.ExpirationDate ascending
                                     select p;
 
                     return PartialView("_Filter", notInCirc.ToList());
                 case "all":
-                    return PartialView("_Filter", db.Products.ToList());
+                    return PartialView("_Filter", db.Products.OrderBy(p => p.ExpirationDate).ToList());
             }
 
-            return PartialView("_Filter", db.Products.ToList());
+            return PartialView("_Filter", db.Products.OrderBy(p => p.ExpirationDate).ToList());
         }
     }
 }
