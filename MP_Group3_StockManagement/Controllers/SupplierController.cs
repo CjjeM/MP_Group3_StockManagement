@@ -30,7 +30,7 @@ namespace MP_Group3_StockManagement.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin, user")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddSupplier(Supplier model)
@@ -95,7 +95,7 @@ namespace MP_Group3_StockManagement.Controllers
             return View(supplier);
         }
 
-        [Authorize(Roles = "Admin, user")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [HandleError(ExceptionType = typeof(DbUpdateException), View = "Error")]
         public ActionResult DeleteSupplier(int id)

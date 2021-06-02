@@ -7,7 +7,10 @@
 <h2>Product List</h2>
 
 <p>
-    @Html.ActionLink("Add New Product", "AddProduct", null, new { @class = "btn btn-success" })
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Add New Product", "AddProduct", null, new { @class = "btn btn-success" })
+    }
 </p>
 
 
@@ -20,7 +23,7 @@
         {
             <div class="form-row">
                 <div class="input-group">
-                    @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Product" })
+                    @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Product Name" })
                     <div class="input-group-append">
                         <input type="submit" value="Search" class="btn btn-secondary" />
                     </div>

@@ -47,7 +47,7 @@ namespace MP_Group3_StockManagement.Controllers
             return Json(list);
         }
 
-        [Authorize(Roles = "Admin, user")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddInventory(Inventory model)
@@ -123,7 +123,7 @@ namespace MP_Group3_StockManagement.Controllers
             return View(inventory);
         }
 
-        [Authorize(Roles = "Admin, user")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [HandleError(ExceptionType = typeof(DbUpdateException), View = "Error")]
         public ActionResult DeleteInventory(int id)

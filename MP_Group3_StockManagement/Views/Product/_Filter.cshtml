@@ -50,7 +50,10 @@
                 <td>
                     @Html.ActionLink("Edit", "EditProduct", new { id = item.ProductID }, new { @class = "btn btn-secondary" }) |
                     @Html.ActionLink("Details", "Details", new { id = item.ProductID }, new { @class = "btn btn-info" }) |
-                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the product: @item.ProductName?')" />
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the product: @item.ProductName?')" />
+                    }
                 </td>
             </tr>
         }

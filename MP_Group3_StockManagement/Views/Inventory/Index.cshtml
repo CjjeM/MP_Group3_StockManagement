@@ -7,19 +7,20 @@
 <h2>Inventory List</h2>
 
 <p>
-    @Html.ActionLink("Add New Inventory", "AddInventory", null, new { @class = "btn btn-success" })
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Add New Inventory", "AddInventory", null, new { @class = "btn btn-success" })
+    }
 </p>
 
 @using (Html.BeginForm("Index", "Inventory", FormMethod.Get))
 {
     <div class="input-group">
-        @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Supplier" })
+        @Html.TextBox("search", "", new { @class = "form-control", @placeholder = "Search Supplier Name" })
         <div class="input-group-append">
             <input type="submit" value="Search" class="btn btn-secondary" />
         </div>
     </div>
-
-
 }
 <br />
 
@@ -81,7 +82,10 @@
                 <td>
                     @Html.ActionLink("Edit", "EditInventory", new { id = item.InventoryID }, new { @class = "btn btn-secondary" }) |
                     @Html.ActionLink("Details", "Details", new { id = item.InventoryID }, new { @class = "btn btn-info" }) |
-                    <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the inventory: @item.ProductName?')" />
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete the inventory: @item.ProductName?')" />
+                    }
                 </td>
             </tr>
         }

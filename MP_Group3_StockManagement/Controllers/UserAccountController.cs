@@ -65,6 +65,7 @@ namespace MP_Group3_StockManagement.Controllers
                 }
                 else {
                     Session["Username"] = model.Username.ToString();
+                    Session["UserRole"] = model.UserRole;
                     return RedirectToAction("Index", "Home");
                 }
             }

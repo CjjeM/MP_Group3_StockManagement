@@ -53,8 +53,15 @@ namespace MP_Group3_StockManagement.Controllers
                         where p.ExpirationDate == null ||
                         DateTime.Compare(DateTime.Now, p.ExpirationDate) < 1
                         select p.TotalPrice;
-
-            ViewBag.CurrentStocksCost = Queryable.Sum(model);
+            try
+            {
+                ViewBag.CurrentStocksCost = Queryable.Sum(model);
+            }
+            catch
+            {
+                ViewBag.CurrentStocksCost = "0.00";
+            }
+            
 
             return PartialView("CostCurrentAvailableStocks");
         }
@@ -65,7 +72,14 @@ namespace MP_Group3_StockManagement.Controllers
                         DateTime.Compare(DateTime.Now, p.ExpirationDate) > 0
                         select p.TotalPrice;
 
-            ViewBag.CurrentExpiredCost = Queryable.Sum(model);
+            try
+            {
+                ViewBag.CurrentExpiredCost = Queryable.Sum(model);
+            }
+            catch
+            {
+                ViewBag.CurrentExpiredCost = "0.00";
+            }
 
             return PartialView("CostExpiredStocks");
         }
