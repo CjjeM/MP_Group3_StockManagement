@@ -47,8 +47,9 @@ namespace MP_Group3_StockManagement.Controllers
         [Authorize(Roles = "User")]
         public ActionResult ViewUserLogs()
         {
+            var username = Session["Username"].ToString();
             var logs = from log in db.Logs
-                       where log.Username == Session["Username"].ToString()
+                       where log.Username == username
                        orderby log.Date descending
                        select log;
 
